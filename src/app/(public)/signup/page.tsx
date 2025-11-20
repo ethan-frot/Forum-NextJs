@@ -23,7 +23,7 @@ export default function SignUpPage() {
         {/* Signup Card with Glassmorphism */}
         <Card className="w-full max-w-md border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
           <CardHeader className="space-y-3 text-center">
-            <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50">
+            <div className="mx-auto w-16 h-16 rounded-full bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -39,7 +39,7 @@ export default function SignUpPage() {
                 />
               </svg>
             </div>
-            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+            <CardTitle className="text-3xl font-bold bg-linear-to-r from-white to-white/70 bg-clip-text text-transparent">
               Créer un compte
             </CardTitle>
             <CardDescription className="text-white/60 text-base">
