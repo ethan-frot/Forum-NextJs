@@ -21,7 +21,7 @@ export default function SignUpPage() {
         </Link>
 
         {/* Signup Card with Glassmorphism */}
-        <Card className="w-full max-w-md border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-lg shadow-black/20">
+        <Card className="w-full max-w-md border-white/5 bg-white/2 backdrop-blur-xl shadow-lg shadow-black/20">
           <CardHeader className="space-y-3 text-center">
             <div className="mx-auto w-16 h-16 rounded-full bg-linear-to-br from-blue-500/80 to-violet-600/80 flex items-center justify-center shadow-md shadow-blue-500/10">
               <svg
