@@ -21,16 +21,16 @@ export default function SignUpPage() {
         </Link>
 
         {/* Signup Card with Glassmorphism */}
-        <Card className="w-full max-w-md border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
+        <Card className="w-full max-w-md border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-lg shadow-black/20">
           <CardHeader className="space-y-3 text-center">
-            <div className="mx-auto w-16 h-16 rounded-full bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50">
+            <div className="mx-auto w-16 h-16 rounded-full bg-linear-to-br from-blue-500/80 to-violet-600/80 flex items-center justify-center shadow-md shadow-blue-500/10">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="w-8 h-8 text-white"
+                className="w-8 h-8 text-white/90"
               >
                 <path
                   strokeLinecap="round"
@@ -39,10 +39,10 @@ export default function SignUpPage() {
                 />
               </svg>
             </div>
-            <CardTitle className="text-3xl font-bold bg-linear-to-r from-white to-white/70 bg-clip-text text-transparent">
+            <CardTitle className="text-3xl font-bold bg-linear-to-r from-white/90 to-blue-200/70 bg-clip-text text-transparent">
               Créer un compte
             </CardTitle>
-            <CardDescription className="text-white/60 text-base">
+            <CardDescription className="text-white/50 text-base">
               Inscrivez-vous pour participer aux discussions du forum
             </CardDescription>
           </CardHeader>
@@ -50,31 +50,24 @@ export default function SignUpPage() {
             <SignUpForm />
 
             {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
+            <div className="relative mt-4 mb-2">
+              <div className="flex items-center">
                 <span className="w-full border-t border-white/10" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-transparent px-2 text-white/50">Déjà un compte ?</span>
               </div>
             </div>
 
             {/* Sign in link */}
             <div className="text-center">
+              <span className="bg-transparent px-2 text-white/40">Déjà un compte ?</span>
               <Link
                 href="/signin"
-                className="text-sm text-purple-300 hover:text-purple-200 transition-colors font-medium hover:underline underline-offset-4"
+                className="text-sm text-blue-300/80 hover:text-blue-200 transition-colors font-medium hover:underline underline-offset-4"
               >
                 Se connecter →
               </Link>
             </div>
           </CardContent>
         </Card>
-
-        {/* Footer note */}
-        <p className="absolute bottom-8 text-center text-xs text-white/40">
-          En créant un compte, vous acceptez les conditions d'utilisation
-        </p>
     </div>
   );
 }

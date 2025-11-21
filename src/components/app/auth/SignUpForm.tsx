@@ -73,7 +73,7 @@ export function SignUpForm() {
             id="name"
             type="text"
             placeholder="Alice Dupont"
-            className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-purple-400 focus:ring-purple-400/50"
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-blue-400/50 focus:ring-blue-400/20"
             {...register('name', {
               maxLength: {
                 value: 100,
@@ -99,7 +99,7 @@ export function SignUpForm() {
             id="email"
             type="email"
             placeholder="alice@example.com"
-            className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-purple-400 focus:ring-purple-400/50"
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-blue-400/50 focus:ring-blue-400/20"
             {...register('email', {
               required: 'L\'email est requis',
               pattern: {
@@ -130,7 +130,7 @@ export function SignUpForm() {
             id="password"
             type="password"
             placeholder="••••••••"
-            className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-purple-400 focus:ring-purple-400/50"
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-blue-400/50 focus:ring-blue-400/20"
             {...register('password', {
               required: 'Le mot de passe est requis',
               minLength: {
@@ -164,7 +164,7 @@ export function SignUpForm() {
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold shadow-lg shadow-purple-500/50 transition-all duration-300 hover:shadow-purple-500/70 hover:scale-[1.02]"
+        className="w-full cursor-pointer bg-linear-to-r from-blue-500/90 to-violet-600/90 hover:from-blue-500 hover:to-violet-600 text-white font-semibold shadow-md shadow-blue-500/10 transition-all duration-300 hover:shadow-blue-500/20 hover:scale-[1.01]"
         size="lg"
       >
         {isLoading ? (
