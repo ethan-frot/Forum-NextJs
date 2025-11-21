@@ -51,11 +51,11 @@ export function SignUpForm() {
       }
 
       // Succès
-      toast.success('Compte créé avec succès ! 🎉');
+      toast.success('Compte créé avec succès');
 
-      // Redirection vers la home page après un court délai
+      // Redirection vers la page de connexion après un court délai
       setTimeout(() => {
-        router.push('/');
+        router.push('/signin');
       }, 1500);
     } catch (error) {
       console.error('Erreur lors de l\'inscription:', error);
