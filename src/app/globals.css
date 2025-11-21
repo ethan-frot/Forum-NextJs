@@ -172,3 +172,59 @@
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Animations pour les toasts Sonner */
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+  }
+}
+
+/* Styles spécifiques pour Sonner */
+/* Animation d'entrée - Utilise :not() pour augmenter la spécificité */
+[data-sonner-toast]:not([data-removed="true"]):not([data-swiping="true"]):not([data-expanded="true"]),
+[data-sonner-toast][data-mounted="true"] {
+  animation: toast-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Animation de sortie */
+[data-sonner-toast][data-removed="true"] {
+  animation: toast-slide-out 0.25s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+}
+
+/* Transition pendant le swipe */
+[data-sonner-toast][data-swiping="true"] {
+  transition: transform 0.2s ease-out !important;
+  animation: none !important;
+}
+
+/* État expanded (hover) - transitions douces */
+[data-sonner-toast][data-expanded="true"] {
+  animation: none !important;
+  transition: all 0.2s ease-out !important;
+}
+
+/* Classe helper pour forcer l'animation */
+.toast-animated[data-sonner-toast]:not([data-expanded="true"]) {
+  animation: toast-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.toast-animated[data-sonner-toast][data-removed="true"] {
+  animation: toast-slide-out 0.25s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+}
