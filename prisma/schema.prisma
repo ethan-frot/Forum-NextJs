@@ -60,6 +60,7 @@ model User {
   conversations  Conversation[]
   messages       Message[]
   passwordResets PasswordReset[]
+  sessions       Session[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -77,4 +78,17 @@ model PasswordReset {
   createdAt DateTime  @default(now())
 
   @@map("password_reset")
+}
+
+model Session {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken  String    @unique
+  refreshToken String    @unique
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@map("session")
 }
