@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { BackgroundLayout } from "@/components/app/common/BackgroundLayout";
+import { SessionProvider } from "@/components/providers/SessionProvider";
+import { AuthButton } from "@/components/app/common/AuthButton";
 
 const satoshi = localFont({
   src: [
@@ -21,7 +23,8 @@ const satoshi = localFont({
 
 export const metadata: Metadata = {
   title: "Forum | Architecture Clean & DDD",
-  description: "Forum développé avec Clean Architecture et Domain-Driven Design",
+  description:
+    "Forum développé avec Clean Architecture et Domain-Driven Design",
 };
 
 export default function RootLayout({
@@ -31,13 +34,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body
-        className={`${satoshi.variable} font-sans antialiased`}
-      >
-        <BackgroundLayout>
-          {children}
-        </BackgroundLayout>
-        <Toaster position="top-right" />
+      <body className={`${satoshi.variable} font-sans antialiased`}>
+        <SessionProvider>
+          <BackgroundLayout>
+            <div className="fixed top-6 right-6 z-50">
+              <AuthButton />
+            </div>
+            {children}
+          </BackgroundLayout>
+          <Toaster position="top-right" offset="30px" />
+        </SessionProvider>
       </body>
     </html>
   );
