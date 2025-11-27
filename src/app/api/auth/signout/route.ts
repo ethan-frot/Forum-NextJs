@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { SignOutUseCase } from "@/module/user/signOut/SignOutUseCase";
 import { SignOutPrismaRepository } from "@/module/user/signOut/SignOutPrismaRepository";
 
@@ -7,37 +8,44 @@ import { SignOutPrismaRepository } from "@/module/user/signOut/SignOutPrismaRepo
  *
  * Règles métier (US-11) :
  * - Invalide tous les tokens JWT (Access + Refresh) côté serveur
- * - Supprime les cookies de session
+ * - Révoque les sessions en base de données
+ * - Supprime les cookies de session NextAuth
  * - Retourne 200 OK même si aucune session n'est active
  *
- * NOTE TEMPORAIRE :
- * Cette implémentation accepte le userId dans le corps de la requête
- * pour les tests. Plus tard, elle sera modifiée pour extraire le userId
- * depuis la session JWT (via NextAuth ou lib/auth.ts).
+ * Cette route doit être appelée AVANT NextAuth.signOut() côté client
+ * pour garantir la révocation des sessions en base de données.
  *
- * @param request - NextRequest contenant le userId
  * @returns NextResponse avec le résultat de la déconnexion
  */
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
-    // 1. Parser le corps de la requête
-    const body = await request.json();
-    const { userId } = body;
+    // 1. Récupérer la session NextAuth
+    const session = await auth();
 
-    // 2. Validation basique (temporaire - sera remplacée par auth JWT)
-    if (!userId) {
-      return NextResponse.json(
-        { error: "L'identifiant utilisateur est requis" },
-        { status: 400 }
+    // 2. Si pas de session, retourner succès (déjà déconnecté)
+    if (!session?.user?.id) {
+      // Créer la réponse quand même pour supprimer les cookies
+      const response = NextResponse.json(
+        {
+          success: true,
+          message: "Déjà déconnecté",
+          revokedSessions: 0,
+        },
+        { status: 200 }
       );
+
+      // Supprimer les cookies NextAuth au cas où ils existeraient
+      deleteCookies(response);
+
+      return response;
     }
 
     // 3. Instantier les dépendances (simple DI)
     const repository = new SignOutPrismaRepository();
     const useCase = new SignOutUseCase(repository);
 
-    // 4. Exécuter le use case
-    const result = await useCase.execute({ userId });
+    // 4. Exécuter le use case (révocation des sessions en DB)
+    const result = await useCase.execute({ userId: session.user.id });
 
     // 5. Créer la réponse avec suppression des cookies
     const response = NextResponse.json(
@@ -49,11 +57,8 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
 
-    // 6. Supprimer les cookies de session
-    // Note : Les noms des cookies seront définis lors de l'implémentation JWT complète
-    response.cookies.delete("accessToken");
-    response.cookies.delete("refreshToken");
-    response.cookies.delete("session");
+    // 6. Supprimer les cookies NextAuth
+    deleteCookies(response);
 
     return response;
   } catch (error) {
@@ -71,4 +76,25 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Supprime tous les cookies de session NextAuth
+ * Gère les différents environnements (dev/prod) et les différents noms de cookies
+ */
+function deleteCookies(response: NextResponse) {
+  // Cookies NextAuth en développement
+  response.cookies.delete("next-auth.session-token");
+  response.cookies.delete("next-auth.csrf-token");
+  response.cookies.delete("next-auth.callback-url");
+
+  // Cookies NextAuth en production (sécurisés)
+  response.cookies.delete("__Secure-next-auth.session-token");
+  response.cookies.delete("__Secure-next-auth.csrf-token");
+  response.cookies.delete("__Secure-next-auth.callback-url");
+
+  // Cookies custom (si utilisés)
+  response.cookies.delete("accessToken");
+  response.cookies.delete("refreshToken");
+  response.cookies.delete("session");
 }
