@@ -1,3 +1,17 @@
+interface ConversationWithCount {
+  id?: string;
+  title: string;
+  authorId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
+  messageCount: number;
+}
+
+interface ListConversationsResponse {
+  conversations: ConversationWithCount[];
+}
+
 interface CreateConversationInput {
   title?: string;
   content: string;
@@ -5,6 +19,20 @@ interface CreateConversationInput {
 
 interface CreateConversationResponse {
   conversationId: string;
+}
+
+export async function fetchConversations(): Promise<ListConversationsResponse> {
+  const response = await fetch('/api/conversations', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Erreur lors de la récupération des conversations');
+  }
+
+  return response.json();
 }
 
 export async function createConversation(
