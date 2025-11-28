@@ -51,6 +51,12 @@ export function SignInForm() {
     formState: { errors },
   } = useForm<SignInFormData>();
 
+  const getRedirectUrl = () => {
+    if (typeof window === 'undefined') return '/';
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect') || '/';
+  };
+
   const onSubmit = async (data: SignInFormData) => {
     setIsLoading(true);
 
@@ -84,8 +90,9 @@ export function SignInForm() {
       // Redirection différée pour laisser le temps à l'utilisateur de lire le toast
       // router.refresh() est nécessaire pour forcer Next.js à refetch les composants serveur
       // avec la nouvelle session (notamment pour mettre à jour le navbar)
+      const redirectUrl = getRedirectUrl();
       setTimeout(() => {
-        router.push('/');
+        router.push(redirectUrl);
         router.refresh();
       }, 1500);
     } catch (error) {

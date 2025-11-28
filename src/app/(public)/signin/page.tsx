@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { SignInForm } from '@/components/app/auth/SignInForm';
+import { AuthRedirectToast } from '@/components/app/auth/AuthRedirectToast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 
@@ -11,6 +13,9 @@ export const metadata = {
 export default function SignInPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
+        <Suspense fallback={null}>
+          <AuthRedirectToast />
+        </Suspense>
         {/* Bouton retour */}
         <Link
           href="/"
