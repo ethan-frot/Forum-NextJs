@@ -1,8 +1,8 @@
-import { prisma } from '@/lib/prisma';
-import { CreateConversationRepository } from './CreateConversationRepository';
-import { Conversation } from '@/domain/conversation/Conversation';
-import { Message } from '@/domain/conversation/Message';
-import { PrismaClient } from '@/generated/prisma';
+import { prisma } from "@/lib/prisma";
+import { CreateConversationRepository } from "./CreateConversationRepository";
+import { Conversation } from "@/domain/conversation/Conversation";
+import { Message } from "@/domain/message/Message";
+import { PrismaClient } from "@/generated/prisma";
 
 /**
  * Implémentation Prisma du repository pour créer une conversation
@@ -19,7 +19,10 @@ export class CreateConversationPrismaRepository
     this.prismaClient = prismaClient || prisma;
   }
 
-  async save(conversation: Conversation, firstMessage: Message): Promise<string> {
+  async save(
+    conversation: Conversation,
+    firstMessage: Message
+  ): Promise<string> {
     const result = await this.prismaClient.conversation.create({
       data: {
         title: conversation.title,

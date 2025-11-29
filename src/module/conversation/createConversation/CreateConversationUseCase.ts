@@ -1,6 +1,6 @@
-import { CreateConversationRepository } from './CreateConversationRepository';
-import { Conversation } from '@/domain/conversation/Conversation';
-import { Message } from '@/domain/conversation/Message';
+import { CreateConversationRepository } from "./CreateConversationRepository";
+import { Conversation } from "@/domain/conversation/Conversation";
+import { Message } from "@/domain/message/Message";
 
 /**
  * Use Case : Créer une conversation (US-1)
@@ -43,7 +43,9 @@ export class CreateConversationUseCase {
       return { conversationId };
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Impossible de créer la conversation: ${error.message}`);
+        throw new Error(
+          `Impossible de créer la conversation: ${error.message}`
+        );
       }
       throw error;
     }
