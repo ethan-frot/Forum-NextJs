@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { BackgroundLayout } from "@/components/app/common/BackgroundLayout";
 import { SessionProvider } from "@/components/providers/SessionProvider";
+import { QueryClientProvider } from "@/components/providers/QueryClientProvider";
 import { AuthButton } from "@/components/app/common/AuthButton";
 
 const satoshi = localFont({
@@ -35,15 +36,17 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${satoshi.variable} font-sans antialiased`}>
-        <SessionProvider>
-          <BackgroundLayout>
-            <div className="fixed top-6 right-6 z-50">
-              <AuthButton />
-            </div>
-            {children}
-          </BackgroundLayout>
-          <Toaster position="top-right" offset="30px" />
-        </SessionProvider>
+        <QueryClientProvider>
+          <SessionProvider>
+            <BackgroundLayout>
+              <div className="fixed top-6 right-6 z-50">
+                <AuthButton />
+              </div>
+              {children}
+            </BackgroundLayout>
+            <Toaster position="top-right" offset="30px" />
+          </SessionProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
