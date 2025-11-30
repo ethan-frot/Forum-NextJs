@@ -56,6 +56,15 @@ interface CreateConversationResponse {
   conversationId: string;
 }
 
+interface UpdateConversationInput {
+  conversationId: string;
+  title: string;
+}
+
+interface UpdateConversationResponse {
+  success: boolean;
+}
+
 export async function fetchConversations(): Promise<ListConversationsResponse> {
   const response = await fetch("/api/conversations", {
     method: "GET",
@@ -103,6 +112,25 @@ export async function fetchConversationById(
     const errorData = await response.json();
     throw new Error(
       errorData.error || "Erreur lors de la récupération de la conversation"
+    );
+  }
+
+  return response.json();
+}
+
+export async function updateConversationTitle(
+  data: UpdateConversationInput
+): Promise<UpdateConversationResponse> {
+  const response = await fetch(`/api/conversations/${data.conversationId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: data.title }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.error || "Erreur lors de la mise à jour de la conversation"
     );
   }
 
