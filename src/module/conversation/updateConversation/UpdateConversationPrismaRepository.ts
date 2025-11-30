@@ -26,7 +26,7 @@ export class UpdateConversationPrismaRepository
       title: data.title,
       authorId: data.authorId,
       createdAt: data.createdAt,
-      updatedAt: data.updatedAt ?? undefined,
+      updatedAt: data.updatedAt || data.createdAt,
       deletedAt: data.deletedAt,
     });
   }
