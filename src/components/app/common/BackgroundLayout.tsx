@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import FloatingLines from '@/components/FloatingLines';
+import FloatingLines from "@/components/app/common/FloatingLines";
 
 /**
  * BackgroundLayout - Layout global pour le background animé
@@ -17,7 +17,7 @@ export function BackgroundLayout({ children }: { children: React.ReactNode }) {
       {/* Background animé avec FloatingLines (Three.js) */}
       <div className="fixed inset-0 z-0">
         <FloatingLines
-          enabledWaves={['top', 'middle', 'bottom']}
+          enabledWaves={["top", "middle", "bottom"]}
           lineCount={5}
           lineDistance={5}
           bendRadius={5.0}
@@ -28,9 +28,7 @@ export function BackgroundLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Content avec z-index supérieur */}
-      <div className="relative z-10">
-        {children}
-      </div>
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }
