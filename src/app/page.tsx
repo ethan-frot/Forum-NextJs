@@ -1,4 +1,4 @@
-import { ConversationList } from '@/components/app/conversation/ConversationList';
+import { ConversationList } from '@/module/conversation/listConversations/ui/ConversationList';
 
 /**
  * Page d'accueil - Home Page

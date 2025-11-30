@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ConversationCreateForm } from '../../../module/conversation/createConversation/ui/ConversationCreateForm';
-import { ConversationCard } from '../../../module/conversation/listConversations/ui/ConversationCard';
+import { ConversationCreateForm } from '../../createConversation/ui/ConversationCreateForm';
+import { ConversationCard } from './ConversationCard';
 import { MessageSquare, Loader2 } from 'lucide-react';
 import { fetchConversations } from '@/services/conversation/conversation.service';
 
