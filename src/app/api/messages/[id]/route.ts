@@ -5,7 +5,7 @@
  * Status : 200 OK | 400 Bad Request | 401 Unauthorized | 403 Forbidden | 404 Not Found
  */
 import { NextRequest } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/auth-helpers';
 import { UpdateMessageUseCase } from '@/module/message/updateMessage/UpdateMessageUseCase';
 import { UpdateMessagePrismaRepository } from '@/module/message/updateMessage/UpdateMessagePrismaRepository';
 import { DeleteMessageUseCase } from '@/module/message/deleteMessage/DeleteMessageUseCase';
@@ -16,7 +16,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }
@@ -60,7 +60,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }

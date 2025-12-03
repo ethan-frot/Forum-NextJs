@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/auth-helpers';
 import { CreateMessageUseCase } from '@/module/message/createMessage/CreateMessageUseCase';
 import { CreateMessagePrismaRepository } from '@/module/message/createMessage/CreateMessagePrismaRepository';
 
@@ -10,7 +10,7 @@ import { CreateMessagePrismaRepository } from '@/module/message/createMessage/Cr
  */
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }

@@ -6,7 +6,7 @@
  * DELETE - Supprimer une conversation (US-5)
  */
 import { NextRequest } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/auth-helpers';
 import { GetConversationByIdUseCase } from '@/module/conversation/getConversationById/GetConversationByIdUseCase';
 import { GetConversationByIdPrismaRepository } from '@/module/conversation/getConversationById/GetConversationByIdPrismaRepository';
 import { UpdateConversationUseCase } from '@/module/conversation/updateConversation/UpdateConversationUseCase';
@@ -59,7 +59,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }
@@ -118,7 +118,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }

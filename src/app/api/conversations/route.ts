@@ -5,7 +5,7 @@
  * POST - Créer une conversation (US-1)
  */
 import { NextRequest } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth/auth-helpers';
 import { CreateConversationUseCase } from '@/module/conversation/createConversation/CreateConversationUseCase';
 import { CreateConversationPrismaRepository } from '@/module/conversation/createConversation/CreateConversationPrismaRepository';
 import { ListConversationsUseCase } from '@/module/conversation/listConversations/ListConversationsUseCase';
@@ -46,7 +46,7 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }
