@@ -147,7 +147,11 @@ export function ConversationDetail({
         ) : (
           <div className="space-y-4">
             {conversation.messages.map((message) => (
-              <MessageCard key={message.id} message={message} />
+              <MessageCard
+                key={message.id}
+                message={message}
+                conversationId={conversationId}
+              />
             ))}
           </div>
         )}
