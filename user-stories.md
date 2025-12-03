@@ -27,7 +27,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Création réussie**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Quand** il crée une conversation avec le titre "Bienvenue sur le forum" et le contenu "Bonjour à tous !"
   - **Alors** la conversation doit être créée avec succès
@@ -36,31 +35,26 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** un ID unique (CUID) doit être généré pour la conversation
 
 - **Exemple 2 / Scénario 2 : Création échouée - utilisateur non authentifié**
-
   - **Étant donné** qu'aucun utilisateur n'est authentifié
   - **Quand** on tente de créer une conversation avec le titre "Test" et le contenu "Message"
   - **Alors** une erreur doit être retournée avec le statut **401 Unauthorized**
 
 - **Exemple 3 / Scénario 3 : Création échouée - titre vide**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il crée une conversation avec un titre vide ""
   - **Alors** une erreur doit être retournée avec le statut **400 Bad Request**
 
 - **Exemple 4 / Scénario 4 : Création échouée - titre trop long**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il crée une conversation avec un titre de 201 caractères
   - **Alors** une erreur doit être retournée avec le statut **400 Bad Request**
 
 - **Exemple 5 / Scénario 5 : Création échouée - contenu vide**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il crée une conversation avec le titre "Test" et un contenu vide ""
   - **Alors** une erreur doit être retournée avec le statut **400 Bad Request**
 
 - **Exemple 6 / Scénario 6 : Création échouée - contenu trop long**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il crée une conversation avec un contenu de 2001 caractères
   - **Alors** une erreur doit être retournée avec le statut **400 Bad Request**
@@ -85,7 +79,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Récupération réussie**
-
   - **Étant donné** qu'il existe 5 conversations dans la base de données
   - **Et** qu'aucune conversation n'est supprimée
   - **Quand** on demande la liste des conversations
@@ -94,7 +87,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** chaque conversation doit afficher son nombre de messages
 
 - **Exemple 2 / Scénario 2 : Exclusion des conversations supprimées**
-
   - **Étant donné** qu'il existe 5 conversations
   - **Et** que 2 conversations ont `deletedAt` défini (soft delete)
   - **Quand** on demande la liste des conversations
@@ -102,7 +94,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** les conversations supprimées ne doivent pas apparaître
 
 - **Exemple 3 / Scénario 3 : Liste vide**
-
   - **Étant donné** qu'il n'y a aucune conversation dans la base
   - **Quand** on demande la liste des conversations
   - **Alors** un tableau vide doit être retourné
@@ -129,7 +120,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Récupération réussie**
-
   - **Étant donné** qu'une conversation existe avec l'ID "conv-123"
   - **Et** que cette conversation contient 3 messages
   - **Quand** on demande la conversation "conv-123"
@@ -137,13 +127,11 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** les messages doivent être triés du plus ancien au plus récent
 
 - **Exemple 2 / Scénario 2 : Conversation introuvable**
-
   - **Étant donné** qu'aucune conversation n'existe avec l'ID "conv-999"
   - **Quand** on demande la conversation "conv-999"
   - **Alors** une erreur **404 Not Found** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Conversation supprimée**
-
   - **Étant donné** qu'une conversation existe avec l'ID "conv-456"
   - **Et** que cette conversation a `deletedAt` défini
   - **Quand** on demande la conversation "conv-456"
@@ -170,7 +158,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Modification réussie**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Et** qu'une conversation existe avec l'ID "conv-123" et `authorId` = "user-123"
   - **Quand** il modifie le titre en "Nouveau titre"
@@ -178,26 +165,22 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** `updatedAt` doit être mis à jour
 
 - **Exemple 2 / Scénario 2 : Modification échouée - titre vide**
-
   - **Étant donné** qu'un utilisateur est authentifié et propriétaire de "conv-123"
   - **Quand** il modifie le titre avec une chaîne vide ""
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Modification échouée - titre trop long**
-
   - **Étant donné** qu'un utilisateur est authentifié et propriétaire de "conv-123"
   - **Quand** il modifie le titre avec 201 caractères
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 4 / Scénario 4 : Modification échouée - pas le propriétaire**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-456"
   - **Et** qu'une conversation existe avec `authorId` = "user-123"
   - **Quand** l'utilisateur "user-456" tente de modifier le titre
   - **Alors** une erreur **403 Forbidden** doit être retournée
 
 - **Exemple 5 / Scénario 5 : Modification échouée - non authentifié**
-
   - **Étant donné** qu'aucun utilisateur n'est authentifié
   - **Quand** on tente de modifier le titre d'une conversation
   - **Alors** une erreur **401 Unauthorized** doit être retournée
@@ -223,7 +206,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Suppression réussie**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Et** qu'une conversation existe avec l'ID "conv-123" et `authorId` = "user-123"
   - **Quand** il supprime la conversation
@@ -231,14 +213,12 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** la conversation ne doit plus apparaître dans la liste des conversations
 
 - **Exemple 2 / Scénario 2 : Suppression échouée - pas le propriétaire**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-456"
   - **Et** qu'une conversation existe avec `authorId` = "user-123"
   - **Quand** l'utilisateur "user-456" tente de supprimer la conversation
   - **Alors** une erreur **403 Forbidden** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Suppression échouée - non authentifié**
-
   - **Étant donné** qu'aucun utilisateur n'est authentifié
   - **Quand** on tente de supprimer une conversation
   - **Alors** une erreur **401 Unauthorized** doit être retournée
@@ -266,7 +246,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Création réussie**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Et** qu'une conversation existe avec l'ID "conv-123"
   - **Quand** il crée un message avec le contenu "Super discussion !"
@@ -274,19 +253,16 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** l'`authorId` du message doit être "user-123"
 
 - **Exemple 2 / Scénario 2 : Création échouée - contenu vide**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il tente de créer un message avec un contenu vide ""
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Création échouée - contenu trop long**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il crée un message avec 2001 caractères
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 4 / Scénario 4 : Création échouée - conversation inexistante**
-
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il tente de créer un message dans la conversation "conv-999" qui n'existe pas
   - **Alors** une erreur **404 Not Found** doit être retournée
@@ -313,7 +289,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Modification réussie**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Et** qu'un message existe avec `authorId` = "user-123"
   - **Quand** il modifie le contenu en "Contenu modifié"
@@ -321,13 +296,11 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** `updatedAt` doit être mis à jour
 
 - **Exemple 2 / Scénario 2 : Modification échouée - contenu vide**
-
   - **Étant donné** qu'un utilisateur est authentifié et propriétaire d'un message
   - **Quand** il tente de modifier le contenu avec ""
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Modification échouée - pas le propriétaire**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-456"
   - **Et** qu'un message existe avec `authorId` = "user-123"
   - **Quand** l'utilisateur "user-456" tente de modifier le message
@@ -354,14 +327,12 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Suppression réussie**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Et** qu'un message existe avec `authorId` = "user-123"
   - **Quand** il supprime le message
   - **Alors** `deletedAt` doit être défini à la date actuelle
 
 - **Exemple 2 / Scénario 2 : Suppression échouée - pas le propriétaire**
-
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-456"
   - **Et** qu'un message existe avec `authorId` = "user-123"
   - **Quand** "user-456" tente de supprimer le message
@@ -376,6 +347,8 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **En tant que visiteur,**
 **Je veux créer un compte utilisateur,**
 **Afin de pouvoir participer aux discussions du forum**
+
+**Architecture** : Use Case custom + Better Auth (approche hybride)
 
 **Règles métier :**
 
@@ -395,13 +368,16 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 - **Name** (nom d'utilisateur) :
   - Optionnel
   - Maximum 100 caractères si fourni
+- **Connexion automatique** :
+  - Après inscription réussie, l'utilisateur est **automatiquement connecté**
+  - Une session est créée via Better Auth (30 jours)
+  - Un cookie de session httpOnly est défini
 - Retourne **400 Bad Request** si validation échoue
 - Retourne **409 Conflict** si l'email existe déjà
 
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Inscription réussie avec nom**
-
   - **Étant donné** qu'aucun utilisateur n'existe avec l'email "alice@example.com"
   - **Quand** on s'inscrit avec :
     - Email : "alice@example.com"
@@ -410,10 +386,12 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Alors** l'utilisateur doit être créé en base de données
   - **Et** le mot de passe doit être haché avec bcrypt
   - **Et** un ID unique (CUID) doit être généré
+  - **Et** une session doit être créée automatiquement (Better Auth)
+  - **Et** un cookie de session httpOnly doit être défini
+  - **Et** l'utilisateur est immédiatement connecté (pas besoin de se reconnecter)
   - **Et** le statut HTTP doit être **201 Created**
 
 - **Exemple 2 / Scénario 2 : Inscription réussie sans nom**
-
   - **Étant donné** qu'aucun utilisateur n'existe avec l'email "bob@example.com"
   - **Quand** on s'inscrit avec :
     - Email : "bob@example.com"
@@ -421,39 +399,34 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
     - Name : (non fourni)
   - **Alors** l'utilisateur doit être créé
   - **Et** le champ `name` doit être `null`
+  - **Et** l'utilisateur est automatiquement connecté (session créée)
 
 - **Exemple 3 / Scénario 3 : Inscription échouée - email déjà utilisé**
-
   - **Étant donné** qu'un utilisateur existe avec l'email "alice@example.com"
   - **Quand** on tente de s'inscrire avec le même email
   - **Alors** une erreur **409 Conflict** doit être retournée
 
 - **Exemple 4 / Scénario 4 : Inscription échouée - email invalide**
-
   - **Étant donné** qu'aucun utilisateur n'existe
   - **Quand** on s'inscrit avec l'email "invalid-email"
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 5 / Scénario 5 : Inscription échouée - mot de passe trop court**
-
   - **Étant donné** qu'aucun utilisateur n'existe
   - **Quand** on s'inscrit avec le mot de passe "Short1!"
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 6 / Scénario 6 : Inscription échouée - mot de passe sans majuscule**
-
   - **Étant donné** qu'aucun utilisateur n'existe
   - **Quand** on s'inscrit avec le mot de passe "password123!"
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 7 / Scénario 7 : Inscription échouée - mot de passe sans chiffre**
-
   - **Étant donné** qu'aucun utilisateur n'existe
   - **Quand** on s'inscrit avec le mot de passe "Password!"
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 8 / Scénario 8 : Inscription échouée - mot de passe sans caractère spécial**
-
   - **Étant donné** qu'aucun utilisateur n'existe
   - **Quand** on s'inscrit avec le mot de passe "Password123"
   - **Alors** une erreur **400 Bad Request** doit être retournée
@@ -466,43 +439,44 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Je veux me connecter à mon compte,**
 **Afin d'accéder aux fonctionnalités réservées aux membres**
 
+**Architecture** : Better Auth Direct (pas de use case custom)
+
 **Règles métier :**
 
 - **Email** et **mot de passe** obligatoires
 - L'email doit correspondre à un utilisateur existant
-- Le mot de passe est **vérifié avec bcrypt** (hash comparison)
-- Création d'une **session avec Access Token JWT** valable **5 minutes**
-- Création d'un **Refresh Token** valable **30 jours**
-- Access Token stocké en **cookie httpOnly** (protection XSS)
-- Refresh Token stocké en **cookie httpOnly** (protection XSS)
+- Authentification gérée par **Better Auth** (`signIn.email()`)
+- Better Auth vérifie le mot de passe (bcrypt hash comparison)
+- Création d'une **session JWT valable 30 jours** (rolling session)
+- **Renouvellement automatique de la session toutes les 24 heures** si l'utilisateur est actif
+- Session expire après **30 jours d'inactivité totale**
+- Session stockée en **cookie httpOnly** (protection XSS)
 - Session cookies **sameSite: lax** (protection CSRF)
+- Session cookies **secure** en production (HTTPS uniquement)
 - Retourne **400 Bad Request** si email ou password manquant
 - Retourne **401 Unauthorized** si identifiants incorrects
 
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Connexion réussie**
-
   - **Étant donné** qu'un utilisateur existe avec :
     - Email : "alice@example.com"
     - Password (haché) : hash de "SecureP@ss123"
   - **Quand** on se connecte avec :
     - Email : "alice@example.com"
     - Password : "SecureP@ss123"
-  - **Alors** la connexion doit réussir
-  - **Et** un Access Token JWT (5 min) doit être créé
-  - **Et** un Refresh Token (30j) doit être créé
-  - **Et** des cookies httpOnly doivent être définis
+  - **Alors** la connexion doit réussir (gérée par Better Auth)
+  - **Et** une session JWT (30 jours) doit être créée
+  - **Et** une entrée dans la table `Session` doit être créée en base de données (Better Auth)
+  - **Et** un cookie httpOnly, sameSite:lax, secure (prod) doit être défini
   - **Et** le statut HTTP doit être **200 OK**
 
 - **Exemple 2 / Scénario 2 : Connexion échouée - email inexistant**
-
   - **Étant donné** qu'aucun utilisateur n'existe avec l'email "unknown@example.com"
   - **Quand** on tente de se connecter avec cet email
   - **Alors** une erreur **401 Unauthorized** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Connexion échouée - mot de passe incorrect**
-
   - **Étant donné** qu'un utilisateur existe avec l'email "alice@example.com"
   - **Quand** on se connecte avec le mauvais mot de passe "WrongPassword"
   - **Alors** une erreur **401 Unauthorized** doit être retournée
@@ -515,9 +489,12 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Je veux me déconnecter de mon compte,**
 **Afin de sécuriser ma session sur un appareil partagé**
 
+**Architecture** : Better Auth Direct (pas de use case custom)
+
 **Règles métier :**
 
-- Invalide tous les tokens JWT (Access + Refresh) côté serveur
+- Déconnexion gérée par **Better Auth** (`signOut()`)
+- Better Auth supprime la session de la base de données
 - Supprime les cookies de session
 - Accessible uniquement si une session existe
 - Retourne **200 OK** même si aucune session n'est active
@@ -525,10 +502,9 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Déconnexion réussie**
-
   - **Étant donné** qu'un utilisateur est connecté avec une session active
   - **Quand** il se déconnecte
-  - **Alors** les tokens (Access + Refresh) doivent être invalidés
+  - **Alors** la session doit être supprimée de la base de données (Better Auth)
   - **Et** les cookies de session doivent être supprimés
   - **Et** le statut HTTP doit être **200 OK**
 
@@ -555,7 +531,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Demande réussie**
-
   - **Étant donné** qu'un utilisateur existe avec l'email "alice@example.com"
   - **Et** qu'aucune demande récente n'a été faite pour cet email
   - **Quand** on demande la réinitialisation du mot de passe pour "alice@example.com"
@@ -565,14 +540,12 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** le statut HTTP doit être **200 OK**
 
 - **Exemple 2 / Scénario 2 : Demande pour email inexistant (sécurité)**
-
   - **Étant donné** qu'aucun utilisateur n'existe avec l'email "unknown@example.com"
   - **Quand** on demande la réinitialisation pour cet email
   - **Alors** aucun token ne doit être créé
   - **Mais** le statut HTTP doit être **200 OK** (pour masquer l'inexistence de l'email)
 
 - **Exemple 3 / Scénario 3 : Rate limiting dépassé**
-
   - **Étant donné** qu'une demande a été faite il y a 30 secondes pour "alice@example.com"
   - **Quand** on fait une nouvelle demande pour le même email
   - **Alors** une erreur **429 Too Many Requests** doit être retournée
@@ -594,14 +567,13 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 - **Nouveau mot de passe** doit respecter les mêmes règles que l'inscription (US-9)
 - Une fois utilisé, marquer le token comme utilisé (`usedAt` = maintenant)
 - Le nouveau mot de passe est **haché avec bcrypt** avant stockage
-- **Tous les tokens (Access + Refresh) de l'utilisateur sont invalidés** (sécurité)
+- **Toutes les sessions de l'utilisateur sont invalidées** (suppression en base de données pour sécurité)
 - Retourne **400 Bad Request** si token invalide, expiré, ou déjà utilisé
 - Retourne **400 Bad Request** si nouveau mot de passe invalide
 
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Réinitialisation réussie**
-
   - **Étant donné** qu'un token valide "abc123" existe
   - **Et** que le token n'est pas expiré
   - **Et** que le token n'a pas été utilisé (`usedAt` = `null`)
@@ -610,29 +582,25 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
     - Nouveau password : "NewSecure@123"
   - **Alors** le mot de passe de l'utilisateur doit être mis à jour (haché)
   - **Et** `usedAt` du token doit être défini à maintenant
-  - **Et** tous les tokens de session de l'utilisateur doivent être invalidés
+  - **Et** toutes les sessions de l'utilisateur doivent être supprimées de la base de données (sécurité)
   - **Et** le statut HTTP doit être **200 OK**
 
 - **Exemple 2 / Scénario 2 : Réinitialisation échouée - token expiré**
-
   - **Étant donné** qu'un token existe mais `expiresAt` est dans le passé
   - **Quand** on tente de réinitialiser le mot de passe
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 3 / Scénario 3 : Réinitialisation échouée - token déjà utilisé**
-
   - **Étant donné** qu'un token existe avec `usedAt` défini
   - **Quand** on tente de réinitialiser le mot de passe
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 4 / Scénario 4 : Réinitialisation échouée - token inexistant**
-
   - **Étant donné** qu'aucun token "invalid-token" n'existe
   - **Quand** on tente de réinitialiser le mot de passe
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
 - **Exemple 5 / Scénario 5 : Réinitialisation échouée - nouveau mot de passe invalide**
-
   - **Étant donné** qu'un token valide existe
   - **Quand** on tente de réinitialiser avec le mot de passe "weak"
   - **Alors** une erreur **400 Bad Request** doit être retournée
@@ -657,7 +625,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Exemples / Scénarios :**
 
 - **Exemple 1 / Scénario 1 : Récupération réussie**
-
   - **Étant donné** qu'un utilisateur "user-123" existe
   - **Et** qu'il a créé 3 conversations et posté 10 messages
   - **Quand** on demande les contributions de "user-123"
@@ -667,7 +634,6 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** l'email et le password **ne doivent pas** être retournés
 
 - **Exemple 2 / Scénario 2 : Utilisateur inexistant**
-
   - **Étant donné** qu'aucun utilisateur "user-999" n'existe
   - **Quand** on demande les contributions de "user-999"
   - **Alors** une erreur **404 Not Found** doit être retournée
@@ -695,6 +661,7 @@ Tous les messages d'erreur doivent être **en français** et **explicites** pour
 ### Tests
 
 Chaque User Story doit avoir :
+
 - ✅ **Tests unitaires** pour la logique métier (entités + use cases)
 - ✅ **Tests E2E** pour les API routes (avec PostgreSQL en testcontainer)
 
