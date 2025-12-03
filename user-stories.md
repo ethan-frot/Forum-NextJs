@@ -348,7 +348,7 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 **Je veux créer un compte utilisateur,**
 **Afin de pouvoir participer aux discussions du forum**
 
-**Architecture** : Use Case custom + Better Auth (approche hybride)
+**Architecture** : Better Auth Direct (pas de use case custom)
 
 **Règles métier :**
 
