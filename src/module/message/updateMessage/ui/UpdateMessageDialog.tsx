@@ -8,7 +8,7 @@ import { Edit2, MessageSquare } from 'lucide-react';
 import { CustomModal } from '@/components/app/common/CustomModal';
 import { GradientButton } from '@/components/app/common/GradientButton';
 import { IconTextarea } from '@/components/app/common/IconTextarea';
-import { updateMessage } from '@/services/message/message.service';
+import { updateMessage } from '@/services/message.service';
 
 interface UpdateMessageDialogProps {
   messageId: string;

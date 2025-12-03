@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { GradientButton } from '@/components/app/common/GradientButton';
 import { IconTextarea } from '@/components/app/common/IconTextarea';
-import { createMessage } from '@/services/message/message.service';
+import { createMessage } from '@/services/message.service';
 
 interface CreateMessageFormProps {
   conversationId: string;

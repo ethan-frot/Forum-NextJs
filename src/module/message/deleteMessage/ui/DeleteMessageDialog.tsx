@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { Trash2, AlertTriangle } from 'lucide-react';
 import { CustomModal } from '@/components/app/common/CustomModal';
 import { GradientButton } from '@/components/app/common/GradientButton';
-import { deleteMessage } from '@/services/message/message.service';
+import { deleteMessage } from '@/services/message.service';
 
 interface DeleteMessageDialogProps {
   messageId: string;
