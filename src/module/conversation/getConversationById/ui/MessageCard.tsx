@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Card, CardContent } from '@/components/ui/card';
 import { getRelativeTime } from '@/lib/date';
 import { UpdateMessageDialog } from '@/module/message/updateMessage/ui/UpdateMessageDialog';
+import { DeleteMessageDialog } from '@/module/message/deleteMessage/ui/DeleteMessageDialog';
 
 interface AuthorInfo {
   id: string;
@@ -32,10 +33,15 @@ export function MessageCard({ message, conversationId }: MessageCardProps) {
     <Card className="bg-white/5 backdrop-blur-sm border-white/10">
       <CardContent className="pt-6 relative">
         {isAuthor && (
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 flex gap-2">
             <UpdateMessageDialog
               messageId={message.id}
               currentContent={message.content}
+              conversationId={conversationId}
+            />
+            <DeleteMessageDialog
+              messageId={message.id}
+              messagePreview={message.content}
               conversationId={conversationId}
             />
           </div>
