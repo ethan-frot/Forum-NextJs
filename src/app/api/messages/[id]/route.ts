@@ -10,7 +10,7 @@ import { UpdateMessagePrismaRepository } from '@/module/message/updateMessage/Up
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -18,6 +18,7 @@ export async function PATCH(
       return Response.json({ error: 'Non authentifié' }, { status: 401 });
     }
 
+    const { id } = await params;
     const { content } = await request.json();
 
     if (!content) {
@@ -28,7 +29,7 @@ export async function PATCH(
     const useCase = new UpdateMessageUseCase(repository);
 
     await useCase.execute({
-      messageId: params.id,
+      messageId: id,
       userId: session.user.id,
       content,
     });
