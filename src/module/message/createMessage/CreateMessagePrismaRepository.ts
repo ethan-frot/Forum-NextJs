@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { CreateMessageRepository } from './CreateMessageRepository';
 import { Message } from '@/domain/message/Message';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/generated/prisma';
 
 export class CreateMessagePrismaRepository implements CreateMessageRepository {
   private prismaClient: PrismaClient;

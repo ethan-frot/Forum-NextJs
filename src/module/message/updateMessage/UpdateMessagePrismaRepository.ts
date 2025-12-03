@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { UpdateMessageRepository } from './UpdateMessageRepository';
 import { Message } from '@/domain/message/Message';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/generated/prisma';
 
 export class UpdateMessagePrismaRepository implements UpdateMessageRepository {
   private prismaClient: PrismaClient;
@@ -21,10 +21,10 @@ export class UpdateMessagePrismaRepository implements UpdateMessageRepository {
       id: data.id,
       content: data.content,
       authorId: data.authorId,
-      conversationId: data.conversationId,
+      conversationId: data.conversationId ?? undefined,
       createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-      deletedAt: data.deletedAt,
+      updatedAt: data.updatedAt ?? data.createdAt,
+      deletedAt: data.deletedAt ?? undefined,
     });
   }
 
