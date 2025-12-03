@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ConversationCreateForm } from '../../createConversation/ui/ConversationCreateForm';
 import { ConversationCard } from './ConversationCard';
 import { MessageSquare, Loader2 } from 'lucide-react';
-import { fetchConversations } from '@/services/conversation/conversation.service';
+import { fetchConversations } from '@/services/conversation.service';
 
 interface AuthorInfo {
   id: string;

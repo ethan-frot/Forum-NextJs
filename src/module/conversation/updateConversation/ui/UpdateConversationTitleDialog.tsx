@@ -8,7 +8,7 @@ import { Edit2, FileText } from 'lucide-react';
 import { CustomModal } from '@/components/app/common/CustomModal';
 import { GradientButton } from '@/components/app/common/GradientButton';
 import { IconInput } from '@/components/app/common/IconInput';
-import { updateConversationTitle } from '@/services/conversation/conversation.service';
+import { updateConversationTitle } from '@/services/conversation.service';
 
 interface UpdateConversationTitleDialogProps {
   conversationId: string;

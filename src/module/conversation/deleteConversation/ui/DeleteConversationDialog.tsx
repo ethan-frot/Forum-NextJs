@@ -7,7 +7,7 @@ import { Trash2, AlertTriangle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { CustomModal } from '@/components/app/common/CustomModal';
 import { GradientButton } from '@/components/app/common/GradientButton';
-import { deleteConversation } from '@/services/conversation/conversation.service';
+import { deleteConversation } from '@/services/conversation.service';
 
 interface DeleteConversationDialogProps {
   conversationId: string;

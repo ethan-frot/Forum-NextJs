@@ -10,7 +10,7 @@ import { CustomModal } from '@/components/app/common/CustomModal';
 import { GradientButton } from '@/components/app/common/GradientButton';
 import { IconInput } from '@/components/app/common/IconInput';
 import { IconTextarea } from '@/components/app/common/IconTextarea';
-import { createConversation } from '@/services/conversation/conversation.service';
+import { createConversation } from '@/services/conversation.service';
 
 interface ConversationCreateFormData {
   title: string;

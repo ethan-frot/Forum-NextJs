@@ -9,7 +9,7 @@ import { MessageCard } from './MessageCard';
 import { UpdateConversationTitleDialog } from '@/module/conversation/updateConversation/ui/UpdateConversationTitleDialog';
 import { DeleteConversationDialog } from '@/module/conversation/deleteConversation/ui/DeleteConversationDialog';
 import { CreateMessageForm } from '@/module/message/createMessage/ui/CreateMessageForm';
-import { fetchConversationById } from '@/services/conversation/conversation.service';
+import { fetchConversationById } from '@/services/conversation.service';
 import { getRelativeTime } from '@/lib/date';
 
 interface ConversationDetailProps {
