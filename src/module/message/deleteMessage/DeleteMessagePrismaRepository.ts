@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { DeleteMessageRepository } from './DeleteMessageRepository';
 import { Message } from '@/domain/message/Message';
 import { PrismaClient } from '@/generated/prisma';
+import { toMessageDomain } from '../shared/messageMapper';
 
 export class DeleteMessagePrismaRepository implements DeleteMessageRepository {
   private prismaClient: PrismaClient;
@@ -17,15 +18,7 @@ export class DeleteMessagePrismaRepository implements DeleteMessageRepository {
 
     if (!data) return null;
 
-    return new Message({
-      id: data.id,
-      content: data.content,
-      authorId: data.authorId,
-      conversationId: data.conversationId ?? undefined,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt ?? data.createdAt,
-      deletedAt: data.deletedAt ?? undefined,
-    });
+    return toMessageDomain(data);
   }
 
   async delete(message: Message): Promise<void> {

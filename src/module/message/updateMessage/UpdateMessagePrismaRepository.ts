@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { UpdateMessageRepository } from './UpdateMessageRepository';
 import { Message } from '@/domain/message/Message';
 import { PrismaClient } from '@/generated/prisma';
+import { toMessageDomain } from '../shared/messageMapper';
 
 export class UpdateMessagePrismaRepository implements UpdateMessageRepository {
   private prismaClient: PrismaClient;
@@ -17,15 +18,7 @@ export class UpdateMessagePrismaRepository implements UpdateMessageRepository {
 
     if (!data) return null;
 
-    return new Message({
-      id: data.id,
-      content: data.content,
-      authorId: data.authorId,
-      conversationId: data.conversationId ?? undefined,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt ?? data.createdAt,
-      deletedAt: data.deletedAt ?? undefined,
-    });
+    return toMessageDomain(data);
   }
 
   async update(message: Message): Promise<void> {
