@@ -1,8 +1,5 @@
 'use client';
 
-// Ce composant est côté client car il utilise React Hook Form (useState, useForm)
-// et nécessite des event handlers interactifs (onChange, onSubmit)
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -75,7 +72,6 @@ export function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Champ Name (optionnel) */}
       <NameInput
         error={errors.name?.message}
         disabled={isLoading}
@@ -83,21 +79,18 @@ export function SignUpForm() {
         {...register('name', NAME_VALIDATION)}
       />
 
-      {/* Champ Email */}
       <EmailInput
         error={errors.email?.message}
         disabled={isLoading}
         {...register('email', EMAIL_VALIDATION)}
       />
 
-      {/* Champ Password */}
       <PasswordInput
         error={errors.password?.message}
         disabled={isLoading}
         {...register('password', PASSWORD_VALIDATION)}
       />
 
-      {/* Bouton Submit */}
       <GradientButton
         type="submit"
         isLoading={isLoading}
