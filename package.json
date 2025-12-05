@@ -48,6 +48,7 @@
     "three": "^0.181.2"
   },
   "devDependencies": {
+    "@react-email/preview-server": "5.0.5",
     "@tailwindcss/postcss": "^4",
     "@testcontainers/postgresql": "^11.8.1",
     "@types/bcryptjs": "^2.4.6",
