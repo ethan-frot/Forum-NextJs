@@ -12,21 +12,35 @@ interface IconInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   helperText?: string;
   optional?: boolean;
+  labelExtra?: React.ReactNode;
 }
 
 export const IconInput = forwardRef<HTMLInputElement, IconInputProps>(
   (
-    { id, label, icon: Icon, error, helperText, optional, className, ...props },
+    {
+      id,
+      label,
+      icon: Icon,
+      error,
+      helperText,
+      optional,
+      labelExtra,
+      className,
+      ...props
+    },
     ref
   ) => {
     return (
       <div className="space-y-2">
-        <Label htmlFor={id} className="text-white/90">
-          {label}{' '}
-          {optional && (
-            <span className="text-white/50 text-xs">(optionnel)</span>
-          )}
-        </Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor={id} className="text-white/90">
+            {label}{' '}
+            {optional && (
+              <span className="text-white/50 text-xs">(optionnel)</span>
+            )}
+          </Label>
+          {labelExtra}
+        </div>
         <div className="relative">
           <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
           <Input

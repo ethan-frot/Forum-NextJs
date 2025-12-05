@@ -84,6 +84,7 @@ export function SignInForm() {
       <PasswordInput
         error={errors.password?.message}
         disabled={isLoading}
+        showForgotPasswordLink
         {...register('password', {
           required: 'Le mot de passe est requis',
         })}
