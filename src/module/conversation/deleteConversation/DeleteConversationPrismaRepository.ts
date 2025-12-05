@@ -13,7 +13,7 @@ export class DeleteConversationPrismaRepository implements DeleteConversationRep
 
   async findById(id: string): Promise<Conversation | null> {
     const data = await this.prismaClient.conversation.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
     });
 
     if (!data) {

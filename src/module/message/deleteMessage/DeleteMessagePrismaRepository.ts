@@ -13,7 +13,7 @@ export class DeleteMessagePrismaRepository implements DeleteMessageRepository {
 
   async findById(id: string): Promise<Message | null> {
     const data = await this.prismaClient.message.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
     });
 
     if (!data) return null;
