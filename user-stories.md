@@ -668,11 +668,11 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 
 ---
 
-### US-15: Modifier son profil utilisateur
+### US-15a: Modifier nom et bio du profil
 
 **En tant qu'utilisateur authentifié,**
-**Je veux pouvoir modifier les informations de mon profil (nom, bio, avatar, mot de passe),**
-**Afin de personnaliser mon compte et maintenir mes informations à jour**
+**Je veux pouvoir modifier mon nom et ma bio,**
+**Afin de personnaliser les informations textuelles de mon profil**
 
 **Règles métier :**
 
@@ -684,24 +684,9 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
 - **Bio** :
   - Optionnel (peut être `null`)
   - Maximum 500 caractères si fourni
-- **Avatar** :
-  - Optionnel (peut être `null`)
-  - **Upload de fichier image** (JPEG, PNG, WebP uniquement)
-  - Taille maximum : **2 MB**
-  - Dimensions recommandées : 256×256 à 1024×1024 pixels
-  - Le système génère automatiquement une URL CDN après upload
-  - L'URL générée est stockée dans la base de données (max 500 caractères)
-  - Validation du fichier côté serveur (type MIME, taille, magic bytes)
-- **Changement de mot de passe** :
-  - **Ancien mot de passe obligatoire** pour vérification
-  - Ancien mot de passe doit être correct (vérification bcrypt)
-  - **Nouveau mot de passe** doit respecter les règles de US-9 (min 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)
-  - Le nouveau mot de passe est **haché avec bcrypt** (10 salt rounds) avant stockage
-  - **Toutes les sessions de l'utilisateur sont invalidées** après changement de mot de passe (sécurité)
 - `updatedAt` est automatiquement mis à jour
 - Retourne **401 Unauthorized** si non authentifié
 - Retourne **400 Bad Request** si validation échoue
-- Retourne **403 Forbidden** si l'utilisateur tente de modifier le profil d'un autre utilisateur
 
 **Exemples / Scénarios :**
 
@@ -719,24 +704,17 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Et** `updatedAt` doit être mis à jour
   - **Et** le statut HTTP doit être **200 OK**
 
-- **Exemple 3 / Scénario 3 : Upload d'avatar réussi**
+- **Exemple 3 / Scénario 3 : Modification du nom et bio réussie**
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
-  - **Quand** il upload une image JPEG valide de 1 MB
-  - **Alors** le fichier doit être uploadé sur le CDN
-  - **Et** une URL CDN doit être générée (ex: "https://cdn.example.com/avatars/user-123/avatar.jpg")
-  - **Et** le champ `avatar` doit être mis à jour avec l'URL générée
+  - **Quand** il modifie son nom en "Alice Dupont" et sa bio en "Développeuse web"
+  - **Alors** les champs `name` et `bio` doivent être mis à jour
   - **Et** `updatedAt` doit être mis à jour
   - **Et** le statut HTTP doit être **200 OK**
 
-- **Exemple 4 / Scénario 4 : Changement de mot de passe réussi**
-  - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
-  - **Et** que son mot de passe actuel est "OldPass@123"
-  - **Quand** il change son mot de passe avec :
-    - Ancien mot de passe : "OldPass@123"
-    - Nouveau mot de passe : "NewSecure@456"
-  - **Alors** le mot de passe doit être mis à jour (haché avec bcrypt)
-  - **Et** toutes les sessions de l'utilisateur doivent être invalidées (suppression en base de données)
-  - **Et** l'utilisateur doit être déconnecté (session actuelle supprimée)
+- **Exemple 4 / Scénario 4 : Suppression du nom (null)**
+  - **Étant donné** qu'un utilisateur est authentifié avec un nom défini
+  - **Quand** il modifie son nom avec une valeur `null`
+  - **Alors** le champ `name` doit être `null`
   - **Et** le statut HTTP doit être **200 OK**
 
 - **Exemple 5 / Scénario 5 : Modification échouée - nom trop long**
@@ -749,13 +727,115 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Quand** il tente de modifier sa bio avec 501 caractères
   - **Alors** une erreur **400 Bad Request** doit être retournée
 
-- **Exemple 7 / Scénario 7 : Upload d'avatar échoué - fichier trop volumineux**
+- **Exemple 7 / Scénario 7 : Modification échouée - non authentifié**
+  - **Étant donné** qu'aucun utilisateur n'est authentifié
+  - **Quand** on tente de modifier un profil
+  - **Alors** une erreur **401 Unauthorized** doit être retournée
+
+---
+
+### US-15b: Upload avatar utilisateur
+
+**En tant qu'utilisateur authentifié,**
+**Je veux pouvoir uploader une photo de profil (avatar),**
+**Afin de personnaliser visuellement mon compte**
+
+**Règles métier :**
+
+- L'utilisateur **doit être authentifié**
+- L'utilisateur **ne peut modifier que son propre profil**
+- **Avatar** :
+  - Optionnel (peut être `null`)
+  - **Upload de fichier image** (JPEG, PNG, WebP uniquement)
+  - Taille maximum : **2 MB**
+  - Dimensions recommandées : 256×256 à 1024×1024 pixels
+  - Le système génère automatiquement une URL CDN après upload
+  - L'URL générée est stockée dans la base de données (max 500 caractères)
+  - Validation du fichier côté serveur (type MIME, taille, magic bytes)
+- `updatedAt` est automatiquement mis à jour
+- Retourne **401 Unauthorized** si non authentifié
+- Retourne **400 Bad Request** si validation échoue
+
+**Exemples / Scénarios :**
+
+- **Exemple 1 / Scénario 1 : Upload d'avatar réussi**
+  - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
+  - **Quand** il upload une image JPEG valide de 1 MB
+  - **Alors** le fichier doit être uploadé sur le CDN
+  - **Et** une URL CDN doit être générée (ex: "https://cdn.example.com/avatars/user-123/avatar.jpg")
+  - **Et** le champ `avatar` doit être mis à jour avec l'URL générée
+  - **Et** `updatedAt` doit être mis à jour
+  - **Et** le statut HTTP doit être **200 OK**
+
+- **Exemple 2 / Scénario 2 : Upload d'avatar PNG réussi**
+  - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
+  - **Quand** il upload une image PNG valide de 500 KB
+  - **Alors** le fichier doit être uploadé sur le CDN
+  - **Et** le champ `avatar` doit être mis à jour avec l'URL CDN
+  - **Et** le statut HTTP doit être **200 OK**
+
+- **Exemple 3 / Scénario 3 : Suppression de l'avatar (null)**
+  - **Étant donné** qu'un utilisateur est authentifié avec un avatar défini
+  - **Quand** il supprime son avatar (valeur `null`)
+  - **Alors** le champ `avatar` doit être `null`
+  - **Et** le statut HTTP doit être **200 OK**
+
+- **Exemple 4 / Scénario 4 : Upload échoué - fichier trop volumineux**
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il tente d'uploader une image de 3 MB (> 2 MB max)
   - **Alors** une erreur **400 Bad Request** doit être retournée
   - **Et** le message d'erreur doit indiquer "L'image ne peut pas dépasser 2 MB"
 
-- **Exemple 8 / Scénario 8 : Changement de mot de passe échoué - ancien mot de passe incorrect**
+- **Exemple 5 / Scénario 5 : Upload échoué - format non supporté**
+  - **Étant donné** qu'un utilisateur est authentifié
+  - **Quand** il tente d'uploader un fichier GIF ou PDF
+  - **Alors** une erreur **400 Bad Request** doit être retournée
+  - **Et** le message d'erreur doit indiquer "Format non supporté (JPEG, PNG, WebP uniquement)"
+
+- **Exemple 6 / Scénario 6 : Upload échoué - non authentifié**
+  - **Étant donné** qu'aucun utilisateur n'est authentifié
+  - **Quand** on tente d'uploader un avatar
+  - **Alors** une erreur **401 Unauthorized** doit être retournée
+
+---
+
+### US-15c: Changer mot de passe
+
+**En tant qu'utilisateur authentifié,**
+**Je veux pouvoir changer mon mot de passe,**
+**Afin de sécuriser mon compte ou récupérer un accès compromis**
+
+**Règles métier :**
+
+- L'utilisateur **doit être authentifié**
+- **Ancien mot de passe obligatoire** pour vérification
+- Ancien mot de passe doit être correct (vérification bcrypt)
+- **Nouveau mot de passe** doit respecter les règles de US-9 :
+  - Minimum 8 caractères
+  - Au moins 1 majuscule
+  - Au moins 1 minuscule
+  - Au moins 1 chiffre
+  - Au moins 1 caractère spécial parmi `!@#$%^&*()_+-=[]{}|;:,.<>?`
+- Le nouveau mot de passe est **haché avec bcrypt** (10 salt rounds) avant stockage
+- **Toutes les sessions de l'utilisateur sont invalidées** après changement de mot de passe (sécurité)
+- L'utilisateur doit être déconnecté après le changement (session actuelle supprimée)
+- Retourne **401 Unauthorized** si non authentifié
+- Retourne **400 Bad Request** si validation échoue
+
+**Exemples / Scénarios :**
+
+- **Exemple 1 / Scénario 1 : Changement de mot de passe réussi**
+  - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
+  - **Et** que son mot de passe actuel est "OldPass@123"
+  - **Quand** il change son mot de passe avec :
+    - Ancien mot de passe : "OldPass@123"
+    - Nouveau mot de passe : "NewSecure@456"
+  - **Alors** le mot de passe doit être mis à jour (haché avec bcrypt)
+  - **Et** toutes les sessions de l'utilisateur doivent être invalidées (suppression en base de données)
+  - **Et** l'utilisateur doit être déconnecté (session actuelle supprimée)
+  - **Et** le statut HTTP doit être **200 OK**
+
+- **Exemple 2 / Scénario 2 : Changement échoué - ancien mot de passe incorrect**
   - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
   - **Et** que son mot de passe actuel est "OldPass@123"
   - **Quand** il tente de changer son mot de passe avec :
@@ -764,35 +844,39 @@ Ce fichier contient toutes les User Stories du projet avec leurs règles métier
   - **Alors** une erreur **400 Bad Request** doit être retournée
   - **Et** le message d'erreur doit indiquer "Ancien mot de passe incorrect"
 
-- **Exemple 9 / Scénario 9 : Changement de mot de passe échoué - nouveau mot de passe invalide**
+- **Exemple 3 / Scénario 3 : Changement échoué - nouveau mot de passe trop court**
   - **Étant donné** qu'un utilisateur est authentifié
   - **Quand** il tente de changer son mot de passe avec :
     - Ancien mot de passe : (correct)
-    - Nouveau mot de passe : "weak"
+    - Nouveau mot de passe : "Short1!"
   - **Alors** une erreur **400 Bad Request** doit être retournée
   - **Et** le message d'erreur doit indiquer les règles de validation du mot de passe
 
-- **Exemple 10 / Scénario 10 : Modification échouée - non authentifié**
-  - **Étant donné** qu'aucun utilisateur n'est authentifié
-  - **Quand** on tente de modifier un profil
-  - **Alors** une erreur **401 Unauthorized** doit être retournée
-
-- **Exemple 11 / Scénario 11 : Modification multiple réussie**
-  - **Étant donné** qu'un utilisateur est authentifié avec l'ID "user-123"
-  - **Quand** il modifie plusieurs champs en même temps :
-    - Nom : "Alice Dupont"
-    - Bio : "Développeuse web"
-    - Avatar : (upload d'une image valide)
-  - **Alors** tous les champs doivent être mis à jour
-  - **Et** l'avatar doit être uploadé et son URL stockée
-  - **Et** `updatedAt` doit être mis à jour
-  - **Et** le statut HTTP doit être **200 OK**
-
-- **Exemple 12 / Scénario 12 : Upload d'avatar échoué - format non supporté**
+- **Exemple 4 / Scénario 4 : Changement échoué - nouveau mot de passe sans majuscule**
   - **Étant donné** qu'un utilisateur est authentifié
-  - **Quand** il tente d'uploader un fichier GIF ou PDF
+  - **Quand** il tente de changer son mot de passe avec :
+    - Ancien mot de passe : (correct)
+    - Nouveau mot de passe : "newpass123!"
   - **Alors** une erreur **400 Bad Request** doit être retournée
-  - **Et** le message d'erreur doit indiquer "Format non supporté (JPEG, PNG, WebP uniquement)"
+
+- **Exemple 5 / Scénario 5 : Changement échoué - nouveau mot de passe sans chiffre**
+  - **Étant donné** qu'un utilisateur est authentifié
+  - **Quand** il tente de changer son mot de passe avec :
+    - Ancien mot de passe : (correct)
+    - Nouveau mot de passe : "NewPassword!"
+  - **Alors** une erreur **400 Bad Request** doit être retournée
+
+- **Exemple 6 / Scénario 6 : Changement échoué - nouveau mot de passe sans caractère spécial**
+  - **Étant donné** qu'un utilisateur est authentifié
+  - **Quand** il tente de changer son mot de passe avec :
+    - Ancien mot de passe : (correct)
+    - Nouveau mot de passe : "NewPassword123"
+  - **Alors** une erreur **400 Bad Request** doit être retournée
+
+- **Exemple 7 / Scénario 7 : Changement échoué - non authentifié**
+  - **Étant donné** qu'aucun utilisateur n'est authentifié
+  - **Quand** on tente de changer un mot de passe
+  - **Alors** une erreur **401 Unauthorized** doit être retournée
 
 ---
 
@@ -837,11 +921,6 @@ Chaque User Story doit avoir :
 12. **US-12** : Demander réinitialisation mot de passe
 13. **US-13** : Réinitialiser mot de passe
 14. **US-14** : Consulter les contributions
-15. **US-15** : Modifier son profil utilisateur
-
----
-
-**Date de création** : 2025-11-20
-**Dernière mise à jour** : 2025-12-05
-**Version** : 1.2.1
-**Status** : Validé
+15. **US-15a** : Modifier nom et bio du profil
+16. **US-15b** : Upload avatar utilisateur
+17. **US-15c** : Changer mot de passe
