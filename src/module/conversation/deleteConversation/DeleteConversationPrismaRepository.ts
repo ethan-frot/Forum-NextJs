@@ -2,25 +2,19 @@ import { prisma } from '@/lib/prisma';
 import { DeleteConversationRepository } from './DeleteConversationRepository';
 import { Conversation } from '@/domain/conversation/Conversation';
 import { PrismaClient } from '@/generated/prisma';
-import { toConversationDomain } from '../shared/conversationMapper';
+import { ConversationReader } from '../shared/ConversationReader';
 
 export class DeleteConversationPrismaRepository implements DeleteConversationRepository {
   private prismaClient: PrismaClient;
+  private reader: ConversationReader;
 
   constructor(prismaClient?: PrismaClient) {
     this.prismaClient = prismaClient || prisma;
+    this.reader = new ConversationReader(this.prismaClient);
   }
 
   async findById(id: string): Promise<Conversation | null> {
-    const data = await this.prismaClient.conversation.findUnique({
-      where: { id, deletedAt: null },
-    });
-
-    if (!data) {
-      return null;
-    }
-
-    return toConversationDomain(data);
+    return this.reader.findById(id);
   }
 
   async delete(id: string): Promise<void> {
