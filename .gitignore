@@ -45,3 +45,6 @@ next-env.d.ts
 
 # documentation
 /documentation
+
+# IA settings
+/.claude
